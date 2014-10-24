@@ -1,0 +1,9 @@
+{
+  "directory": "bower_components",
+
+  "scripts": {
+
+    "postinstall": "gulp install"
+
+  }
+}

@@ -1,0 +1,13 @@
+# defaults
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+
+# node
+node_modules
+bower_components
+
+# custom
+dist
