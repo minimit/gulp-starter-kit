@@ -3,8 +3,8 @@
 
     // Enforcing
     "bitwise"       : true,     // true: Prohibit bitwise operators (&, |, ^, etc.)
-    "camelcase"     : false,    // true: Identifiers must be in camelCase
-    "curly"         : false,    // true: Require {} for every new block or scope
+    "camelcase"     : true,     // true: Identifiers must be in camelCase
+    "curly"         : true,     // true: Require {} for every new block or scope
     "eqeqeq"        : true,     // true: Require triple equals (===) for comparison
     "forin"         : false,    // true: Require filtering for..in loops with obj.hasOwnProperty()
     "immed"         : true,     // true: Require immediate invocations to be wrapped in parens e.g. `(function () { } ());`
@@ -60,7 +60,7 @@
     "couch"         : false,    // CouchDB
     "devel"         : true,     // Development/debugging (alert, confirm, etc)
     "dojo"          : false,    // Dojo Toolkit
-    "jquery"        : false,    // jQuery
+    "jquery"        : true,     // jQuery
     "mootools"      : false,    // MooTools
     "node"          : true,     // Node.js
     "nonstandard"   : false,    // Widely adopted globals (escape, unescape, etc)
@@ -72,7 +72,7 @@
 
     // Custom Globals
     "globals": {
-      "angular"     : true,
+      "angular"     : false,
       "define"      : false,
       "require"     : false,
       "exports"     : false,
