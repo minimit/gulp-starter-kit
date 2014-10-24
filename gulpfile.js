@@ -20,6 +20,11 @@ var config = {
     src: [src + '/styles/**/*.less'],
     dest: dest + '/styles'
   },
+  sass: {
+    compileFiles: [src + '/styles/main.scss'],
+    src: [src + '/styles/**/*.scss'],
+    dest: dest + '/styles'
+  },
   css: {
     src: [src + '/styles/**/*.css'],
     dest: dest + '/styles'
@@ -83,12 +88,13 @@ var ftp = require('gulp-ftp');
 var gulpif = require('gulp-if');
 var imagemin = require('gulp-imagemin');
 var include = require('gulp-include');
-var jshint = require('gulp-jshint');
 var less = require('gulp-less');
+var jshint = require('gulp-jshint');
 var minifycss = require('gulp-minify-css');
 var rename = require("gulp-rename");
-var sourcemaps = require('gulp-sourcemaps');
+//var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var sass = require('gulp-sass')
 var stylish = require('jshint-stylish');
 var mergeStream = require('merge-stream');
 var runSequence = require('run-sequence');
@@ -105,19 +111,18 @@ gulp.task('default', function(callback) {
    Build Tasks
 ======================================================== */
 
-gulp.task('build', ['build-js', 'build-css', 'build-less', 'build-markup', 'build-images', 'build-fonts']);
+gulp.task('build', ['build-js', 'build-css', 'build-less', 'build-sass', 'build-markup', 'build-images', 'build-fonts']);
 
 // Compile & Uglify Js
 gulp.task('build-js', ['lint-js'], function() {
   if (config && config.js && config.js.compileFiles) {
     gulp.watch(config.js.src, ['build-js', reload]);
     return gulp.src(config.js.compileFiles)
-      ////.pipe(sourcemaps.init())
+      //.pipe(sourcemaps.init())
       .pipe(include())
-      //.pipe(gulp.dest(config.js.dest))
       .pipe(rename({suffix: ".min"}))
       .pipe(uglify())
-      ////.pipe(sourcemaps.write('./'))
+      //.pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(config.js.dest));
   }
 });
@@ -146,13 +151,24 @@ gulp.task('build-less', function() {
   if (config && config.less && config.less.compileFiles) {
     gulp.watch(config.less.src, ['build-less', reload]);
     return gulp.src(config.less.compileFiles)
-      ////.pipe(sourcemaps.init())
+      //.pipe(sourcemaps.init())
       .pipe(less())
-      //.pipe(gulp.dest(config.less.dest))
-      //.pipe(rename({suffix: ".min"}))
       .pipe(minifycss())
-      ////.pipe(sourcemaps.write('./'))
+      //.pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(config.less.dest));
+  }
+});
+
+// Compile & Minify Sass
+gulp.task('build-sass', function() {
+  if (config && config.sass && config.sass.compileFiles) {
+    gulp.watch(config.less.src, ['build-sass', reload]);
+    return gulp.src(config.sass.compileFiles)
+      //.pipe(sourcemaps.init())
+      .pipe(sass())
+      .pipe(minifycss())
+      //.pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest(config.sass.dest));
   }
 });
 

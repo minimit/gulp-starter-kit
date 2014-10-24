@@ -1,8 +1,6 @@
 
 ##Build your projects with gulp!
 
-####Build webapps on node js with performances optimization, browser sync, less and sass support
-
 When you build with `gulp`, it does automatically:
 - Js lint
 - Include js with `@codekit-prepend` and `@codekit-append`
