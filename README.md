@@ -70,3 +70,10 @@ Available advanced settings inside `gulpfile.js`:
 
 It supports `js` includes with `@codekit-prepend` and `@codekit-append`.
 They are used by [Codekit](https://incident57.com/codekit/), [Prepros](http://alphapixels.com/prepros/) and others, so you can work with those files.
+
+##Sourcemaps
+
+For now no sourcemaps are generated. Waiting for the modules to support it.
+
+-  [gulp-minify-css](https://github.com/jonathanepollack/gulp-minify-css/issues/34)
+-  [gulp-include](https://github.com/wiledal/gulp-include/issues/9)
