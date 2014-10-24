@@ -1,9 +1,9 @@
 
-##Build your projects with gulp!
+##Build your projects with gulp
 
 When you build with `gulp`, it does automatically:
 - Js lint
-- Include js with `@codekit-prepend` and `@codekit-append`
+- Js includes with `@codekit-prepend` and `@codekit-append`
 - Uglify js
 - Compile less and sass
 - Minify css
@@ -14,7 +14,7 @@ When you build with `gulp`, it does automatically:
 
 ##Requirements
 
-First off go and download and install [node and npm](http://nodejs.org/) on your machine.
+First off download and install [node and npm](http://nodejs.org/) on your machine.
 
 Then install gulp globally:
 
@@ -44,7 +44,7 @@ npm install && bower install
 
 ####Gulp task
 
-Start building with `gulp` task, it builds the project into `/dist`:
+Start building with `gulp`, it builds the project into `/dist`:
 
 ```sh
 gulp
