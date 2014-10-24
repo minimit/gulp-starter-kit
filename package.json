@@ -25,6 +25,6 @@
     "run-sequence": "^1.0.1"
   },
   "scripts": {
-    "build": "npm install gulp-imagemin && npm install browser-sync && npm install && bower install"
+    "build": "npm install && bower install"
   }
 }

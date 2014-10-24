@@ -1,14 +1,14 @@
 
 
 
-testare ftp
+
+
 mettere licenza e info in gulpfile
-rivedere istruzioni readme
 
-WIP (work in progress)
 
+rivedere istruzioni
+testare ftp
 descrivere come installare gulp e bower -g
-
 scrivere che lo uso come codekit https://github.com/lazd/gulp-replace/issues
 	spiegare perche' non uso browserify e requirejs(bugs + semplificare l'import + non voglio http requests addizionali)
 	xe solo prepend e append

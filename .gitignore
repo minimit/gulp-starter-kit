@@ -5,9 +5,6 @@
 *.swp
 *.out
 
-# npm
+# node
 node_modules
 bower_components
-
-# custom
-_*/
