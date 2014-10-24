@@ -1,44 +1,58 @@
 /* =====================================================
    Settings
 ======================================================== */
+
 'use strict';
 
 // Paths
 var src = './app';
 var dest = './dist';
-var bowerrc = './.bowerrc';
 
-// Install
-var fs = require('fs');
-var bower = JSON.parse(fs.readFileSync(bowerrc)).directory;
-var install = {
-  // copy variables.less for customization
-  variables: {
-    filter: bower + '/bootstrap/less/variables.less',
-    dest: src + '/styles/bootstrap'
+// Config
+var config = {
+  js: {
+    compileFiles: [src + '/scripts/main.js'],
+    src: [src + '/scripts/**/*.js'],
+    dest: dest + '/scripts'
   },
-  // copy font files
+  less: {
+    compileFiles: [src + '/styles/main.less'],
+    src: [src + '/styles/**/*.less'],
+    dest: dest + '/styles'
+  },
+  css: {
+    src: [src + '/styles/**/*.css'],
+    dest: dest + '/styles'
+  },
+  images: {
+    src: [src + '/images/**'],
+    dest: dest + "/images"
+  },
   fonts: {
-    filter: bower + '/bootstrap/fonts/**',
-    dest: src + '/fonts'
+    src: [src + '/fonts/**'],
+    dest: dest + '/fonts'
+  },
+  markup: {
+    src: [src + '/*', src + '/**/*.{html,php}', src + '/.htaccess'],
+    dest: dest
   }
 };
 
 // Settings
 var settings = {
-  /* browserSync server, html only
+  /* browserSync server, html only */
   browserSync: {
     server: {
       baseDir: './' + dest
     }
-  },*/
-  /* proxy to webserver, keep trailing / or bugs */
+  },
+  /* or instead proxy to webserver, keep trailing / or bugs
   browserSync: {
     proxy: 'http://192.168.1.183/git/mt-gulp/' + dest + '/',
     host: '192.168.1.183',
     open: 'external'
-  },
-  /* ftp upload
+  },*/
+  /* enable ftp upload
   ftp: {
     host: 'website.com',
     port: 21,
@@ -47,51 +61,22 @@ var settings = {
     remotePath: '/',
     src: dest + "/**"
   },*/
+  /* image compression settings */
   imagemin: {
     progressive: true,
-    svgoPlugins: [{
-      removeViewBox: false
-    }]
-  },
-};
-
-// Config
-var config = {
-  js: {
-    compileFiles: [src + '/scripts/main.js'],
-    src: src + '/scripts/**/*.js',
-    dest: dest + '/scripts'
-  },
-  less: {
-    compileFiles: [src + '/styles/main.less'],
-    src: src + '/styles/**/*.less',
-    dest: dest + '/styles'
-  },
-  css: {
-    src: src + '/styles/**/*.css',
-    dest: dest + '/styles'
-  },
-  images: {
-    src: src + '/images/**',
-    dest: dest + "/images"
-  },
-  fonts: {
-    src: src + '/fonts/**',
-    dest: dest + '/fonts'
-  },
-  markup: {
-    src: src + '/**/*.{html,ico,txt,php}',
-    dest: dest
+    interlaced: true
   }
 };
 
 /* =====================================================
    Includes
 ======================================================== */
+
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var del = require('del');
+var cache = require('gulp-cache');
 var changed = require('gulp-changed');
 var flatten = require('gulp-flatten');
 var ftp = require('gulp-ftp');
@@ -109,51 +94,17 @@ var mergeStream = require('merge-stream');
 var runSequence = require('run-sequence');
 
 /* =====================================================
-   Tasks
+   Default Task
 ======================================================== */
-gulp.task('rebuild', function(callback) {
-  runSequence(['clean'], ['default'], callback);
-});
+
 gulp.task('default', function(callback) {
-  runSequence(['install'], ['build'], ['connect'], callback);
-});
-
-/* =====================================================
-   Clean Tasks
-======================================================== */
-gulp.task('clean', ['clean-dest']);
-
-// Remove Dest Folder
-gulp.task('clean-dest', function(cb) {
-  return del(dest, cb);
-});
-
-/* =====================================================
-   Install Tasks
-======================================================== */
-gulp.task('install', ['install-copy']);
-
-// Copy External Files
-gulp.task('install-copy', function() {
-  if (install) {
-    var merged = mergeStream();
-    for (var key in install) {
-      var key = install[key];
-      var stream = gulp.src(key.filter, {
-          base: key.base
-        })
-        .pipe(gulpif(!key.base, flatten()))
-        .pipe(changed(key.dest))
-        .pipe(gulp.dest(key.dest))
-      merged.add(stream);
-    }
-    return merged;
-  }
+  runSequence(['build'], ['connect'], callback);
 });
 
 /* =====================================================
    Build Tasks
 ======================================================== */
+
 gulp.task('build', ['build-js', 'build-css', 'build-less', 'build-markup', 'build-images', 'build-fonts']);
 
 // Compile & Uglify Js
@@ -161,12 +112,12 @@ gulp.task('build-js', ['lint-js'], function() {
   if (config && config.js && config.js.compileFiles) {
     gulp.watch(config.js.src, ['build-js', reload]);
     return gulp.src(config.js.compileFiles)
-      .pipe(sourcemaps.init())
+      ////.pipe(sourcemaps.init())
       .pipe(include())
-      .pipe(gulp.dest(config.js.dest))
+      //.pipe(gulp.dest(config.js.dest))
       .pipe(rename({suffix: ".min"}))
       .pipe(uglify())
-      .pipe(sourcemaps.write('./'))
+      ////.pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(config.js.dest));
   }
 });
@@ -195,12 +146,12 @@ gulp.task('build-less', function() {
   if (config && config.less && config.less.compileFiles) {
     gulp.watch(config.less.src, ['build-less', reload]);
     return gulp.src(config.less.compileFiles)
-      .pipe(sourcemaps.init())
+      ////.pipe(sourcemaps.init())
       .pipe(less())
-      .pipe(gulp.dest(config.less.dest))
-      .pipe(rename({suffix: ".min"}))
+      //.pipe(gulp.dest(config.less.dest))
+      //.pipe(rename({suffix: ".min"}))
       .pipe(minifycss())
-      .pipe(sourcemaps.write('./'))
+      ////.pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(config.less.dest));
   }
 });
@@ -221,7 +172,7 @@ gulp.task('build-images', function() {
     gulp.watch(config.images.src, ['build-images', reload]);
     return gulp.src(config.images.src)
       .pipe(changed(config.images.dest))
-      .pipe(gulpif(settings && settings.imagemin, imagemin(settings.imagemin)))
+      .pipe(gulpif(settings && settings.imagemin, cache(imagemin(settings.imagemin))))
       .pipe(gulp.dest(config.images.dest));
   }
 });
@@ -239,6 +190,7 @@ gulp.task('build-fonts', function() {
 /* =====================================================
    Connect Tasks
 ======================================================== */
+
 gulp.task('connect', ['connect-sync', 'ftp']);
 
 // Start Browser Sync
@@ -253,5 +205,52 @@ gulp.task('ftp', function() {
   if (settings && settings.ftp) {
     return gulp.src(settings.ftp.src)
       .pipe(ftp(settings.ftp));
+  }
+});
+
+/* =====================================================
+   Unbuild Task
+======================================================== */
+
+// Remove Dest Folder
+gulp.task('unbuild', function(cb) {
+  return del(dest, cb);
+});
+
+/* =====================================================
+   Install Task
+======================================================== */
+
+// Install Settings
+var fs = require('fs');
+var bower = JSON.parse(fs.readFileSync('./.bowerrc')).directory;
+var install = {
+  // copy variables.less for customization
+  variables: {
+    filter: bower + '/bootstrap/less/variables.less',
+    dest: src + '/styles/bootstrap'
+  },
+  // copy font files
+  fonts: {
+    filter: bower + '/bootstrap/fonts/**',
+    dest: src + '/fonts'
+  }
+};
+
+// Copy Files
+gulp.task('install', function() {
+  if (install) {
+    var merged = mergeStream();
+    for (var key in install) {
+      var key = install[key];
+      var stream = gulp.src(key.filter, {
+          base: key.base
+        })
+        .pipe(gulpif(!key.base, flatten()))
+        .pipe(changed(key.dest))
+        .pipe(gulp.dest(key.dest))
+      merged.add(stream);
+    }
+    return merged;
   }
 });

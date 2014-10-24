@@ -1,41 +1,13 @@
 
-// Settings
-var settings = {};
-settings.browserSync: { // browserSync server, html only
-	server: {
-		baseDir: './' + dest
-	}
-}
-/*
-settings.browserSync: { // proxy to webserver, keep trailing / or bugs
-	proxy: 'http://192.168.1.183/git/mt-gulp/' + dest + '/',
-	host: '192.168.1.183',
-	open: 'external'
-}*/
-/*
-settings.ftp: { // ftp upload
-	host: 'website.com',
-	port: 21,
-	user: 'johndoe',
-	pass: '1234',
-	remotePath: '/',
-	src: dest + "/**"
-}*/
-settings.imagemin: {
-	progressive: true,
-	svgoPlugins: [{
-		removeViewBox: false
-	}]
-}
 
 
-
-
-
-semplificare settings
+testare ftp
+mettere licenza e info in gulpfile
 rivedere istruzioni readme
 
 WIP (work in progress)
+
+descrivere come installare gulp e bower -g
 
 scrivere che lo uso come codekit https://github.com/lazd/gulp-replace/issues
 	spiegare perche' non uso browserify e requirejs(bugs + semplificare l'import + non voglio http requests addizionali)
@@ -71,7 +43,6 @@ we install gulp-imagemin and browser-sync by themselves because of some issues w
 
 	includes bootstrap and jquery
 	other included stuff
-	CSS Autoprefixing
 	Built-in preview server with livereload
 	scripts lint
 	image compression
@@ -90,6 +61,18 @@ future fixes
 	waiting for gulp-include to support sourcemaps https://github.com/wiledal/gulp-include/issues/9
 todo
 	add gulp-autoprefixer
+	var AUTOPREFIXER_BROWSERS = [
+		'ie >= 10',
+		'ie_mob >= 10',
+		'ff >= 30',
+		'chrome >= 34',
+		'safari >= 7',
+		'opera >= 23',
+		'ios >= 7',
+		'android >= 4.4',
+		'bb >= 10'
+	];
+	.pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
 
 If you ever need to stop the server, use Ctrl+C to quit the gulp process.
 
