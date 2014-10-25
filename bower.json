@@ -1,5 +1,5 @@
 {
-  "name": "mt-gulp",
+  "name": "gulp-starter-kit",
   "dependencies": {
     "jquery": ">= 2.1.1"
   }
