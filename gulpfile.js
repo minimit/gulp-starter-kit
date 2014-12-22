@@ -5,7 +5,7 @@
 'use strict';
 
 // Paths
-var src = './app';
+var src = './src';
 var dest = './dist';
 
 // Config
@@ -120,6 +120,7 @@ gulp.task('build-js', ['lint-js'], function() {
     return gulp.src(config.js.compileFiles)
       //.pipe(sourcemaps.init())
       .pipe(include())
+      .pipe(gulp.dest(config.js.dest))
       .pipe(rename({suffix: ".min"}))
       .pipe(uglify())
       //.pipe(sourcemaps.write('./'))
@@ -153,7 +154,9 @@ gulp.task('build-less', function() {
     return gulp.src(config.less.compileFiles)
       //.pipe(sourcemaps.init())
       .pipe(less())
+      .pipe(gulp.dest(config.less.dest))
       .pipe(minifycss())
+      .pipe(rename({suffix: ".min"}))
       //.pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(config.less.dest));
   }
