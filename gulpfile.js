@@ -53,7 +53,7 @@ var settings = {
   },
   /* or instead proxy to webserver, keep trailing / or bugs
   browserSync: {
-    proxy: 'http://192.168.1.183/git/mt-gulp/' + dest + '/',
+    proxy: 'http://192.168.1.183/git/gulp-starter-kit/' + dest + '/',
     host: '192.168.1.183',
     open: 'external'
   },*/
