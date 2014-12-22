@@ -1,2 +1,2 @@
 // files starting with _ are not compiled
-console.log("_sub.js loaded");
+console.log('_hidden.js loaded');

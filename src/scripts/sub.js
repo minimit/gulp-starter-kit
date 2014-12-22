@@ -1,1 +1,1 @@
-console.log("sub.js loaded");
+console.log('sub.js loaded');

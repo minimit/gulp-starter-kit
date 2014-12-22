@@ -5,15 +5,15 @@
 'use strict';
 
 // Paths
-var src = './src';
-var dest = './dist';
+var src = '/src';
+var dest = '/dist';
 
 // Settings
 var settings = {
   /* browserSync server, html only */
   browserSync: {
     server: {
-      baseDir: './' + dest
+      baseDir: './'
     }
   },
   /* or instead proxy to webserver, keep trailing / or bugs
@@ -82,13 +82,12 @@ var concat = require('gulp-concat');
 gulp.task('build-js', ['lint-js'], function() {
   gulp.watch([src + '/scripts/**/*.js'], ['build-js', reload]);
   return gulp.src([src + '/scripts/**/[!_]*.js'])
-    .pipe(gulp.dest(dest + '/scripts'))
     .pipe(sourcemaps.init())
     .pipe(concat('main.js'))
     .pipe(gulp.dest(dest + '/scripts'))
     .pipe(rename({suffix: ".min"}))
     .pipe(uglify())
-    .pipe(sourcemaps.write('./'))
+    //.pipe(sourcemaps.write('./', {includeContent: true, sourceRoot: '../..' + src + '/scripts'}))
     .pipe(gulp.dest(dest + '/scripts'));
 });
 
@@ -116,7 +115,10 @@ gulp.task('build-less', function() {
     .pipe(gulp.dest(dest + '/styles'))
     .pipe(minifycss())
     .pipe(rename({suffix: ".min"}))
-    .pipe(sourcemaps.write('./'))
+    //.pipe(sourcemaps.write('./', {includeContent: true, sourceRoot: '../..' + src + '/styles'}))
+    .pipe(sourcemaps.write('./', {
+      debug:true, loadMaps: true, includeContent: true
+    }))
     .pipe(gulp.dest(dest + '/styles'));
 });
 
@@ -129,7 +131,7 @@ gulp.task('build-sass', function() {
     .pipe(gulp.dest(dest + '/styles'))
     .pipe(minifycss())
     .pipe(rename({suffix: ".min"}))
-    .pipe(sourcemaps.write('./'))
+    //.pipe(sourcemaps.write('./', {includeContent: true, sourceRoot: '../..' + src + '/styles'}))
     .pipe(gulp.dest(dest + '/styles'));
 });
 
