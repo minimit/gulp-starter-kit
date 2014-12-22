@@ -8,41 +8,6 @@
 var src = './src';
 var dest = './dist';
 
-// Config
-var config = {
-  js: {
-    compileFiles: [src + '/scripts/main.js'],
-    src: [src + '/scripts/**/*.js'],
-    dest: dest + '/scripts'
-  },
-  less: {
-    compileFiles: [src + '/styles/main.less'],
-    src: [src + '/styles/**/*.less'],
-    dest: dest + '/styles'
-  },
-  sass: {
-    compileFiles: [src + '/styles/main.scss'],
-    src: [src + '/styles/**/*.scss'],
-    dest: dest + '/styles'
-  },
-  css: {
-    src: [src + '/styles/**/*.css'],
-    dest: dest + '/styles'
-  },
-  images: {
-    src: [src + '/images/**'],
-    dest: dest + "/images"
-  },
-  fonts: {
-    src: [src + '/fonts/**'],
-    dest: dest + '/fonts'
-  },
-  markup: {
-    src: [src + '/*', src + '/**/*.{html,php}', src + '/.htaccess'],
-    dest: dest
-  }
-};
-
 // Settings
 var settings = {
   /* browserSync server, html only */
@@ -87,12 +52,11 @@ var flatten = require('gulp-flatten');
 var ftp = require('gulp-ftp');
 var gulpif = require('gulp-if');
 var imagemin = require('gulp-imagemin');
-var include = require('gulp-include');
 var less = require('gulp-less');
 var jshint = require('gulp-jshint');
 var minifycss = require('gulp-minify-css');
 var rename = require("gulp-rename");
-//var sourcemaps = require('gulp-sourcemaps');
+var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass')
 var stylish = require('jshint-stylish');
@@ -114,96 +78,85 @@ gulp.task('default', function(callback) {
 gulp.task('build', ['build-js', 'build-css', 'build-less', 'build-sass', 'build-markup', 'build-images', 'build-fonts']);
 
 // Compile & Uglify Js
+var concat = require('gulp-concat');
 gulp.task('build-js', ['lint-js'], function() {
-  if (config && config.js && config.js.compileFiles) {
-    gulp.watch(config.js.src, ['build-js', reload]);
-    return gulp.src(config.js.compileFiles)
-      //.pipe(sourcemaps.init())
-      .pipe(include())
-      .pipe(gulp.dest(config.js.dest))
-      .pipe(rename({suffix: ".min"}))
-      .pipe(uglify())
-      //.pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest(config.js.dest));
-  }
+  gulp.watch([src + '/scripts/**/*.js'], ['build-js', reload]);
+  return gulp.src([src + '/scripts/**/[!_]*.js'])
+    .pipe(gulp.dest(dest + '/scripts'))
+    .pipe(sourcemaps.init())
+    .pipe(concat('main.js'))
+    .pipe(gulp.dest(dest + '/scripts'))
+    .pipe(rename({suffix: ".min"}))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(dest + '/scripts'));
 });
 
 // JS Lint
 gulp.task('lint-js', function() {
-  if (config && config.js && config.js.src) {
-    return gulp.src(config.js.src)
-      .pipe(jshint())
-      .pipe(jshint.reporter(stylish));
-  }
+  return gulp.src([src + '/scripts/**/*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish));
 });
 
 // Copy Css
 gulp.task('build-css', function() {
-  if (config && config.css && config.css.src) {
-    gulp.watch(config.css.src, ['build-css', reload]);
-    return gulp.src(config.css.src)
-      .pipe(changed(config.css.dest))
-      .pipe(gulp.dest(config.css.dest));
-  }
+  gulp.watch([src + '/styles/**/*.css'], ['build-css', reload]);
+  return gulp.src([src + '/styles/**/[!_]*.css'])
+    .pipe(changed(dest + '/styles'))
+    .pipe(gulp.dest(dest + '/styles'));
 });
 
 // Compile & Minify Less
 gulp.task('build-less', function() {
-  if (config && config.less && config.less.compileFiles) {
-    gulp.watch(config.less.src, ['build-less', reload]);
-    return gulp.src(config.less.compileFiles)
-      //.pipe(sourcemaps.init())
-      .pipe(less())
-      .pipe(gulp.dest(config.less.dest))
-      .pipe(minifycss())
-      .pipe(rename({suffix: ".min"}))
-      //.pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest(config.less.dest));
-  }
+  gulp.watch([src + '/styles/**/*.less'], ['build-less', reload]);
+  return gulp.src([src + '/styles/**/[!_]*.less'])
+    .pipe(sourcemaps.init())
+    .pipe(less())
+    .pipe(gulp.dest(dest + '/styles'))
+    .pipe(minifycss())
+    .pipe(rename({suffix: ".min"}))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(dest + '/styles'));
 });
 
 // Compile & Minify Sass
 gulp.task('build-sass', function() {
-  if (config && config.sass && config.sass.compileFiles) {
-    gulp.watch(config.less.src, ['build-sass', reload]);
-    return gulp.src(config.sass.compileFiles)
-      //.pipe(sourcemaps.init())
-      .pipe(sass())
-      .pipe(minifycss())
-      //.pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest(config.sass.dest));
-  }
+  gulp.watch([src + '/styles/**/*.scss'], ['build-sass', reload]);
+  return gulp.src([src + '/styles/**/[!_]*.scss'])
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(gulp.dest(dest + '/styles'))
+    .pipe(minifycss())
+    .pipe(rename({suffix: ".min"}))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(dest + '/styles'));
 });
 
 // Copy Markup
 gulp.task('build-markup', function() {
-  if (config && config.markup && config.markup.src) {
-    gulp.watch(config.markup.src, ['build-markup', reload]);
-    return gulp.src(config.markup.src)
-      .pipe(changed(config.markup.dest))
-      .pipe(gulp.dest(config.markup.dest));
-  }
+  var markupFiles = [src + '/*', src + '/**/*.{html,php}', src + '/.htaccess'];
+  gulp.watch(markupFiles, ['build-markup', reload]);
+  return gulp.src(markupFiles)
+    .pipe(changed(dest))
+    .pipe(gulp.dest(dest));
 });
 
 // Copy Images
 gulp.task('build-images', function() {
-  if (config && config.images && config.images.src) {
-    gulp.watch(config.images.src, ['build-images', reload]);
-    return gulp.src(config.images.src)
-      .pipe(changed(config.images.dest))
-      .pipe(gulpif(settings && settings.imagemin, cache(imagemin(settings.imagemin))))
-      .pipe(gulp.dest(config.images.dest));
-  }
+  gulp.watch([src + '/images/**'], ['build-images', reload]);
+  return gulp.src([src + '/images/**'])
+    .pipe(changed(dest + '/images'))
+    .pipe(gulpif(settings && settings.imagemin, cache(imagemin(settings.imagemin))))
+    .pipe(gulp.dest(dest + '/images'));
 });
 
 // Copy Fonts
 gulp.task('build-fonts', function() {
-  if (config && config.fonts && config.fonts.src) {
-    gulp.watch(config.fonts.src, ['build-fonts', reload]);
-    return gulp.src(config.fonts.src)
-      .pipe(changed(config.fonts.dest))
-      .pipe(gulp.dest(config.fonts.dest));
-  }
+  gulp.watch([src + '/fonts/**'], ['build-fonts', reload]);
+  return gulp.src([src + '/fonts/**'])
+    .pipe(changed(dest + '/fonts'))
+    .pipe(gulp.dest(dest + '/fonts'));
 });
 
 /* =====================================================
@@ -235,42 +188,3 @@ gulp.task('ftp', function() {
 gulp.task('unbuild', function(cb) {
   return del(dest, cb);
 });
-
-/* =====================================================
-   Install Task
-========================================================
-
-// Install Settings
-var fs = require('fs');
-var bower = JSON.parse(fs.readFileSync('./.bowerrc')).directory;
-var install = {
-  // copy variables.less for customization
-  variables: {
-    filter: bower + '/bootstrap/less/variables.less',
-    dest: src + '/styles/bootstrap'
-  },
-  // copy font files
-  fonts: {
-    filter: bower + '/bootstrap/fonts/**',
-    dest: src + '/fonts'
-  }
-};
-
-// Copy Files
-gulp.task('install', function() {
-  if (install) {
-    var merged = mergeStream();
-    for (var key in install) {
-      var key = install[key];
-      var stream = gulp.src(key.filter, {
-          base: key.base
-        })
-        .pipe(gulpif(!key.base, flatten()))
-        .pipe(changed(key.dest))
-        .pipe(gulp.dest(key.dest))
-      merged.add(stream);
-    }
-    return merged;
-  }
-});
-*/

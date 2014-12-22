@@ -3,10 +3,11 @@
 
 When you build with `gulp`, it does automatically:
 - Js lint
-- Js includes with `@codekit-prepend` and `@codekit-append`
+- Js concatenation
 - Uglify js
 - Compile less and sass
 - Minify css
+- Source maps
 - Optimize images
 - Run http webserver or proxy to your webserver
 - Sync all the browser
@@ -60,20 +61,11 @@ Use `npm unbuild.bat` or `npm unbuild.sh` to clear the `/node_modules` and the `
 
 Available advanced settings inside `gulpfile.js`:
 - `src` and `dest` folders
-- `js` `less` `sass` sources to compile
-- `src` globs and `dest` folder for each file types
 - browserSync server or proxy to your own webserver
 - automatic ftp upload
 - imagemin compression
 
-##Codekit support
+##Js concatenation and Less Sass compilation
 
-It supports `js` includes with `@codekit-prepend` and `@codekit-append`.
-They are used by [Codekit](https://incident57.com/codekit/), [Prepros](http://alphapixels.com/prepros/) and others, so you can work with those files.
-
-##Sourcemaps
-
-For now no sourcemaps are generated. Waiting for the modules to support it.
-
--  [gulp-minify-css](https://github.com/jonathanepollack/gulp-minify-css/issues/34)
--  [gulp-include](https://github.com/wiledal/gulp-include/issues/9)
+The gulp task does Js concatenation and Less and Sass compilation, if you want to exclude a file, just name it with a starting underscore (ex: **_myfile.js**).
+Files starting with "**_**" are excluded but you can still import them normally with Less and Sass.
