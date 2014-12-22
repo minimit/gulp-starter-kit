@@ -5,8 +5,8 @@
 'use strict';
 
 // Paths
-var src = '/src';
-var dest = '/dist';
+var src = './src';
+var dest = './dist';
 
 // Settings
 var settings = {
