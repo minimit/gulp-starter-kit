@@ -1,9 +1,3 @@
 {
-  "directory": "bower_components",
-
-  "scripts": {
-
-    "postinstall": "gulp install"
-
-  }
+  "directory": "dist/bower_components"
 }

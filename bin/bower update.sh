@@ -1,0 +1,3 @@
+cd..
+
+bower update

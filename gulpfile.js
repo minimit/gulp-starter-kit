@@ -13,7 +13,7 @@ var settings = {
   /* browserSync server, html only */
   browserSync: {
     server: {
-      baseDir: './'
+      baseDir: dest
     }
   },
   /* or instead proxy to webserver, keep trailing / or bugs
@@ -87,7 +87,7 @@ gulp.task('build-js', ['lint-js'], function() {
     .pipe(gulp.dest(dest + '/scripts'))
     .pipe(rename({suffix: ".min"}))
     .pipe(uglify())
-    //.pipe(sourcemaps.write('./', {includeContent: true, sourceRoot: '../..' + src + '/scripts'}))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(dest + '/scripts'));
 });
 
@@ -112,13 +112,12 @@ gulp.task('build-less', function() {
   return gulp.src([src + '/styles/**/[!_]*.less'])
     .pipe(sourcemaps.init())
     .pipe(less())
+    .pipe(sourcemaps.write({includeContent: false})) // fix
+    .pipe(sourcemaps.init({loadMaps: true})) // fix
     .pipe(gulp.dest(dest + '/styles'))
     .pipe(minifycss())
     .pipe(rename({suffix: ".min"}))
-    //.pipe(sourcemaps.write('./', {includeContent: true, sourceRoot: '../..' + src + '/styles'}))
-    .pipe(sourcemaps.write('./', {
-      debug:true, loadMaps: true, includeContent: true
-    }))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(dest + '/styles'));
 });
 
@@ -128,10 +127,12 @@ gulp.task('build-sass', function() {
   return gulp.src([src + '/styles/**/[!_]*.scss'])
     .pipe(sourcemaps.init())
     .pipe(sass())
+    .pipe(sourcemaps.write({includeContent: false})) // fix
+    .pipe(sourcemaps.init({loadMaps: true})) // fix
     .pipe(gulp.dest(dest + '/styles'))
     .pipe(minifycss())
     .pipe(rename({suffix: ".min"}))
-    //.pipe(sourcemaps.write('./', {includeContent: true, sourceRoot: '../..' + src + '/styles'}))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(dest + '/styles'));
 });
 

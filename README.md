@@ -2,11 +2,9 @@
 ##Build your projects with gulp
 
 When you build with `gulp`, it does automatically:
+- Js concatenation and minification
 - Js lint
-- Js concatenation
-- Uglify js
-- Compile less and sass
-- Minify css
+- Compile and minify less and sass
 - Source maps
 - Optimize images
 - Run http webserver or proxy to your webserver
@@ -31,41 +29,40 @@ npm install -g bower
 
 ##Usage
 
-You can just execute the `.sh` or `.bat` files inside the `/bin` folder.
-
-Or run the shell commands. Be sure to navigate in the the root directory of mt-gulp.
+You can just execute the `.sh` or `.bat` files inside the `/bin` folder. Or run the shell commands.
 
 ####Install all dependencies
 
-Use `npm run build` script or use this command:
+Execute `npm install` and `bower update` files or use this command:
 
 ```sh
-npm install && bower install
+npm install && bower update
 ```
+
+Bower default folder is `dist/bower_components`.
 
 ####Gulp task
 
-Start building with `gulp`, it builds the project into `/dist`:
+Start building with `gulp`, it builds the project into `/dist` and open the browser on the webserver with browser sync.
 
 ```sh
 gulp
 ```
 
-####Unbuild
-
-Use `gulp unbuild` to remove the `/dist` folder.
-
-Use `npm unbuild.bat` or `npm unbuild.sh` to clear the `/node_modules` and the `/bower_components`.
+Edit the settings inside `gulpfile.js` if you want to use your own webserver.
 
 ##Settings
 
 Available advanced settings inside `gulpfile.js`:
-- `src` and `dest` folders
+- `src` and `dest` folders (if you change the dest folder also change the directory inside `.bowerrc`)
 - browserSync server or proxy to your own webserver
 - automatic ftp upload
-- imagemin compression
+- imagemin compression settings
 
 ##Js concatenation and Less Sass compilation
 
 The gulp task does Js concatenation and Less and Sass compilation, if you want to exclude a file, just name it with a starting underscore (ex: **_myfile.js**).
 Files starting with "**_**" are excluded but you can still import them normally with Less and Sass.
+
+##Sourcemaps
+Sourcemaps are bugged now on [gulp-minify-css](https://github.com/jonathanepollack/gulp-minify-css/issues/34) and on [gulp-concat](https://github.com/wearefractal/gulp-concat)
