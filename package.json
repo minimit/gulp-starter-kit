@@ -11,14 +11,14 @@
   ],
   "license": {
     "type": "MIT",
-    "url": "https://github.com/minimit/mt-gulp/blob/master/LICENSE"
+    "url": "https://github.com/minimit/gulp-starter-kit/blob/master/LICENSE"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/minimit/mt-gulp.git"
+    "url": "https://github.com/minimit/gulp-starter-kit.git"
   },
   "bugs": {
-    "url": "https://github.com/minimit/mt-gulp/issues"
+    "url": "https://github.com/minimit/gulp-starter-kit/issues"
   },
   "devDependencies": {
     "browser-sync": "^1.5.8",
