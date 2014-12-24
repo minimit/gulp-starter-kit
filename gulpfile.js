@@ -93,7 +93,6 @@ gulp.task('build-js', ['compile-js'], function() {
 
 // Compile & Uglify Js
 gulp.task('compile-js', ['lint-js'], function() {
-  gulp.watch([src + '/scripts/**/*.js'], ['build-js', reload]);
   return gulp.src([src + '/scripts/**/[!_]*.js'])
     .pipe(gulp.dest(dest + '/scripts'))
     .pipe(rename({suffix: ".min"}))
