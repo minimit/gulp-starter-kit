@@ -51,25 +51,26 @@ gulp
 
 Edit the settings inside `gulpfile.js` if you want to use your own webserver.
 
-##Settings
-
-Available advanced settings inside `gulpfile.js`:
-- `src` and `dest` folders (if you change the dest folder also change the directory inside `.bowerrc`)
-- browserSync server or proxy to your own webserver
-- automatic ftp upload
-- imagemin compression settings
-
 ##Js concatenation
 
 The gulp task does Js compilation and concatenation (to `main.js`) automatically.
 If you want to exclude a file from compilation, just name it with a starting underscore (ex: **_myfile.js**).
 Files starting with "**_**" are excluded but they are still concatenated in the `main.js`.
 
-##Less Sass compilation
+##Less and Sass compilation
 
 The gulp task does Less and Sass compilation automatically.
 If you want to exclude a file from compilation, just name it with a starting underscore (ex: **_myfile.less**).
 Files starting with "**_**" are excluded but you can still import them normally with Less and Sass.
+
+##Settings
+
+Available advanced settings inside `gulpfile.js`:
+- `src` and `dest` folders (if you change the dest folder also change the directory inside `.bowerrc`)
+- `settings.jsConcatTo` filename for the Js concatenation
+- `settings.browserSync` [browserSync](https://www.npmjs.com/package/browser-sync) options, with examples for server or proxy to your own webserver
+- `settings.ftp` [gulp-ftp](https://www.npmjs.com/package/gulp-ftp) options
+- `settings.imagemin` [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) options
 
 ##Sourcemaps
 Sourcemaps are bugged now on [gulp-minify-css](https://github.com/jonathanepollack/gulp-minify-css/issues/34) and on [gulp-concat](https://github.com/wearefractal/gulp-concat)

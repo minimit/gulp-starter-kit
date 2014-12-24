@@ -10,10 +10,13 @@ var dest = './dist';
 
 // Settings
 var settings = {
+  /* filename for the Js concatenation */
+  jsConcatTo: 'main.js',
   /* browserSync server, html only */
   browserSync: {
     server: {
-      baseDir: dest
+      baseDir: './',
+      directory: true
     }
   },
   /* or instead proxy to webserver, keep trailing / or bugs
@@ -82,7 +85,7 @@ gulp.task('build-js', ['compile-js'], function() {
   gulp.watch([src + '/scripts/**/*.js'], ['build-js', reload]);
   return gulp.src([src + '/scripts/**/*.js'])
     .pipe(sourcemaps.init())
-    .pipe(concat('main.js'))
+    .pipe(concat(settings.jsConcatTo))
     .pipe(gulp.dest(dest + '/scripts'))
     .pipe(rename({suffix: ".min"}))
     .pipe(uglify())
