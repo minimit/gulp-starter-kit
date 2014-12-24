@@ -48,6 +48,7 @@ var reload = browserSync.reload;
 var del = require('del');
 var cache = require('gulp-cache');
 var changed = require('gulp-changed');
+var concat = require('gulp-concat');
 var flatten = require('gulp-flatten');
 var ftp = require('gulp-ftp');
 var gulpif = require('gulp-if');
@@ -77,17 +78,26 @@ gulp.task('default', function(callback) {
 
 gulp.task('build', ['build-js', 'build-css', 'build-less', 'build-sass', 'build-markup', 'build-images', 'build-fonts']);
 
-// Compile & Uglify Js
-var concat = require('gulp-concat');
-gulp.task('build-js', ['lint-js'], function() {
+// Concat & Uglify & Sourcemaps Js
+gulp.task('build-js', ['compile-js'], function() {
   gulp.watch([src + '/scripts/**/*.js'], ['build-js', reload]);
-  return gulp.src([src + '/scripts/**/[!_]*.js'])
+  return gulp.src([src + '/scripts/**/*.js'])
     .pipe(sourcemaps.init())
     .pipe(concat('main.js'))
     .pipe(gulp.dest(dest + '/scripts'))
     .pipe(rename({suffix: ".min"}))
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(dest + '/scripts'));
+});
+
+// Compile & Uglify Js
+gulp.task('compile-js', ['lint-js'], function() {
+  gulp.watch([src + '/scripts/**/*.js'], ['build-js', reload]);
+  return gulp.src([src + '/scripts/**/[!_]*.js'])
+    .pipe(gulp.dest(dest + '/scripts'))
+    .pipe(rename({suffix: ".min"}))
+    .pipe(uglify())
     .pipe(gulp.dest(dest + '/scripts'));
 });
 
@@ -106,7 +116,7 @@ gulp.task('build-css', function() {
     .pipe(gulp.dest(dest + '/styles'));
 });
 
-// Compile & Minify Less
+// Compile & Minify & Sourcemaps Less
 gulp.task('build-less', function() {
   gulp.watch([src + '/styles/**/*.less'], ['build-less', reload]);
   return gulp.src([src + '/styles/**/[!_]*.less'])
@@ -121,7 +131,7 @@ gulp.task('build-less', function() {
     .pipe(gulp.dest(dest + '/styles'));
 });
 
-// Compile & Minify Sass
+// Compile & Minify & Sourcemaps Sass
 gulp.task('build-sass', function() {
   gulp.watch([src + '/styles/**/*.scss'], ['build-sass', reload]);
   return gulp.src([src + '/styles/**/[!_]*.scss'])

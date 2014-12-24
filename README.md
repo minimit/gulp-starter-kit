@@ -59,9 +59,16 @@ Available advanced settings inside `gulpfile.js`:
 - automatic ftp upload
 - imagemin compression settings
 
-##Js concatenation and Less Sass compilation
+##Js concatenation
 
-The gulp task does Js concatenation and Less and Sass compilation, if you want to exclude a file, just name it with a starting underscore (ex: **_myfile.js**).
+The gulp task does Js compilation and concatenation (to `main.js`) automatically.
+If you want to exclude a file from compilation, just name it with a starting underscore (ex: **_myfile.js**).
+Files starting with "**_**" are excluded but they are still concatenated in the `main.js`.
+
+##Less Sass compilation
+
+The gulp task does Less and Sass compilation automatically.
+If you want to exclude a file from compilation, just name it with a starting underscore (ex: **_myfile.less**).
 Files starting with "**_**" are excluded but you can still import them normally with Less and Sass.
 
 ##Sourcemaps
