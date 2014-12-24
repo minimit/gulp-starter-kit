@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "browser-sync": "^1.5.8",
-    "del": "^0.1.3",
     "gulp": "^3.8.8",
     "gulp-cache": "^0.2.4",
     "gulp-changed": "^1.0.0",

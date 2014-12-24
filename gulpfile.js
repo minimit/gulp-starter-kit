@@ -45,7 +45,6 @@ var settings = {
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
-var del = require('del');
 var cache = require('gulp-cache');
 var changed = require('gulp-changed');
 var concat = require('gulp-concat');
@@ -190,13 +189,4 @@ gulp.task('ftp', function() {
     return gulp.src(settings.ftp.src)
       .pipe(ftp(settings.ftp));
   }
-});
-
-/* =====================================================
-   Unbuild Task
-======================================================== */
-
-// Remove Dest Folder
-gulp.task('unbuild', function(cb) {
-  return del(dest, cb);
 });
