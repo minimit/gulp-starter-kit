@@ -12,20 +12,26 @@ var dest = './dist';
 var settings = {
   /* filename for the Js concatenation */
   jsConcatTo: 'main.js',
-  /* browserSync server, html only */
+  /* browserSync server */
+  browserSync: {
+    server: {
+      baseDir: dest
+    }
+  },
+  /* browserSync server, root and directory listing
   browserSync: {
     server: {
       baseDir: './',
       directory: true
     }
-  },
-  /* or instead proxy to webserver, keep trailing / or bugs
+  },*/
+  /* browserSync proxy to webserver, keep trailing / or it bugs
   browserSync: {
     proxy: 'http://192.168.1.183/git/gulp-starter-kit/' + dest + '/',
     host: '192.168.1.183',
     open: 'external'
   },*/
-  /* enable ftp upload
+  /* ftp options
   ftp: {
     host: 'website.com',
     port: 21,
@@ -34,7 +40,7 @@ var settings = {
     remotePath: '/',
     src: dest + "/**"
   },*/
-  /* image compression settings */
+  /* image options */
   imagemin: {
     progressive: true,
     interlaced: true

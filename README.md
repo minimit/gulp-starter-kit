@@ -68,7 +68,7 @@ Files starting with "**_**" are excluded but you can still import them normally 
 Available advanced settings inside `gulpfile.js`:
 - `src` and `dest` folders (if you change the dest folder also change the directory inside `.bowerrc`)
 - `settings.jsConcatTo` filename for the Js concatenation
-- `settings.browserSync` [browserSync](https://www.npmjs.com/package/browser-sync) options, with examples for server or proxy to your own webserver
+- `settings.browserSync` [browserSync](http://www.browsersync.io/docs/options/) options, if you want to execute php or other server side, use proxy to your own webserver
 - `settings.ftp` [gulp-ftp](https://www.npmjs.com/package/gulp-ftp) options
 - `settings.imagemin` [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) options
 
