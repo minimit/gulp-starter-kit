@@ -63,6 +63,12 @@ The gulp task does Less and Sass compilation automatically.
 If you want to exclude a file from compilation, just name it with a starting underscore (ex: **_myfile.less**).
 Files starting with "**_**" are excluded but you can still import them normally with Less and Sass.
 
+##Css copy and minification
+
+The gulp task does Css copy and minification automatically.
+If you want to exclude a file from copy and minification, just name it with a starting underscore (ex: **_myfile.css**).
+Files starting with "**_**" are excluded but you can still import them normally with Less and Sass (ex: `@import (less) '_myfile.css';`).
+
 ##Settings
 
 Available advanced settings inside `gulpfile.js`:
