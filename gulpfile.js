@@ -115,11 +115,14 @@ gulp.task('lint-js', function() {
     .pipe(jshint.reporter(stylish));
 });
 
-// Copy Css
+// Copy & Minify Css
 gulp.task('build-css', function() {
-  gulp.watch([src + '/styles/**/*.css'], ['build-css', reload]);
+  gulp.watch([src + '/styles/**/*.css'], ['build-css', 'build-less', 'build-sass', reload]);
   return gulp.src([src + '/styles/**/[!_]*.css'])
     .pipe(changed(dest + '/styles'))
+    .pipe(gulp.dest(dest + '/styles'))
+    .pipe(minifycss())
+    .pipe(rename({suffix: ".min"}))
     .pipe(gulp.dest(dest + '/styles'));
 });
 

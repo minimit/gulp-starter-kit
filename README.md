@@ -2,12 +2,12 @@
 ##Build your projects with gulp
 
 When you build with `gulp`, it does automatically:
-- Js concatenation and minification
 - Js lint
-- Compile and minify less and sass
-- Source maps
-- Optimize images
-- Run http webserver or proxy to your webserver
+- Js concatenation, minification and source maps
+- Less and Sass compilation, minification and source maps
+- Css copy and minification
+- Images optimization
+- Http webserver or proxy to your webserver
 - Sync all the browser
 - Watch files for changes (keep the command window open)
 
