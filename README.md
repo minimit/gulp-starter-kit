@@ -1,4 +1,4 @@
-# ----- NO LONGER MANTAINED -----
+# ----- NO LONGER MAINTAINED -----
 
 ##Build your projects with gulp
 
